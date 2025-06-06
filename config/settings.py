@@ -137,9 +137,10 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ログイン後のリダイレクト先
-LOGIN_REDIRECT_URL = '/bbs/'
-
 SUPERUSER_NAME = env("SUPERUSER_NAME")
 SUPERUSER_EMAIL = env("SUPERUSER_EMAIL")
 SUPERUSER_PASSWORD = env("SUPERUSER_PASSWORD")
+
+
+# ログイン後のリダイレクト先
+LOGIN_REDIRECT_URL = '/bbs/'
