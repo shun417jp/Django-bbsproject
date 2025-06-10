@@ -46,17 +46,19 @@ class UpdateView(LoginRequiredMixin,generic.edit.UpdateView):
         # 親クラスのdispatchを呼び出して通常の処理を継続
         return super(UpdateView, self).dispatch(request, *args, **kwargs)
 
-class DeleteView(LoginRequiredMixin,generic.edit.DeleteView):
+class DeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Article
     template_name = 'bbs/delete.html'
     success_url = reverse_lazy('bbs:index')
-def dispatch(self, request, *args, **kwargs):
+    
+    def dispatch(self, request, *args, **kwargs):  # インデントを修正
         # 削除対象の投稿オブジェクトを取得
-        obj = self.get_object()
+        obj = self.get_object()  # スペルミスを修正
         if obj.author != self.request.user:
             raise PermissionDenied('削除権限がありません。')
         return super(DeleteView, self).dispatch(request, *args, **kwargs)
-    #検索機能のビュー
+
+#検索機能のビュー
 def search(request):
     articles = None #検索結果を格納する変数を初期化
     searchform = SearchForm(request.GET)#GETリクエストで送信したデータが格納される
