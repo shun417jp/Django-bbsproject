@@ -51,13 +51,15 @@ class DeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     template_name = 'bbs/delete.html'
     success_url = reverse_lazy('bbs:index')
     
-    def dispatch(self, request, *args, **kwargs):  # インデントを修正
+    def dispatch(self, request, *args, **kwargs):
         # 削除対象の投稿オブジェクトを取得
-        obj = self.get_object()  # スペルミスを修正
+        obj = self.get_object()
+        # 投稿者と現在のユーザーが一致しない場合は403エラーを発生
         if obj.author != self.request.user:
             raise PermissionDenied('削除権限がありません。')
-        return super(DeleteView, self).dispatch(request, *args, **kwargs)
-
+        # 権限チェック後に親クラスのdispatchを呼び出し
+        return super().dispatch(request, *args, **kwargs)
+    
 #検索機能のビュー
 def search(request):
     articles = None #検索結果を格納する変数を初期化
